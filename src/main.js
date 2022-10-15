@@ -1,4 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 
-createApp(App).mount('#app')
+import BaseDialog from './components/dialogs/BaseDialog.vue';
+
+const app = createApp(App);
+
+app.component('BaseDialog', BaseDialog);
+
+app.mount('#app');

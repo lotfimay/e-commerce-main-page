@@ -1,26 +1,55 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <the-navigation-bar></the-navigation-bar>
+  <mobile-nav v-if="isMobileNavShowing"></mobile-nav>
+  <product-page></product-page>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TheNavigationBar from './components/nav/TheNavigationBar.vue';
+import ProductPage from './components/product/ProductPage.vue';
+import MobileNav from './components/nav/MobileNav.vue';
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    TheNavigationBar,
+    ProductPage,
+    MobileNav,
+  },
+  data() {
+    return {
+      isMobileNavShowing: false,
+    };
+  },
+  methods: {
+    openMobileNav() {
+      this.isMobileNavShowing = true;
+    },
+    closeMobileNav() {
+      this.isMobileNavShowing = false;
+    },
+  },
+  provide() {
+    return {
+      openMobileNav: this.openMobileNav,
+      closeMobileNav: this.closeMobileNav,
+    };
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap');
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Kumbh Sans', sans-serif;
+}
+
+.clickable {
+  cursor: pointer;
 }
 </style>
