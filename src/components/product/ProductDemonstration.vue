@@ -38,12 +38,12 @@
         v-for="image in images"
         :key="image.thumbnail"
         class="img-container clickable"
-        :class="{ selected_img: this.selectedImage == image.image }"
+        :class="{ selected_img: this.selectedImage === image.image }"
       >
         <img
           :src="image.thumbnail"
           class="small_image"
-          @click="this.selectedImage = image.image"
+          @click="this.changeSelectedImage(image.image)"
           alt=""
         />
       </div>
@@ -54,27 +54,19 @@
 export default {
   props: {
     images: Array,
-    image: String,
-  },
-  data() {
-    return {
-      selectedImage: this.image,
-    };
+    selectedImage: String,
+    changeSelectedImage: Function,
   },
   methods: {
-    setSelectedImage() {
-      // this.selectedImage = imageURL.replace('-thumbnail', '');
-    },
-    printResource() {
-      console.log(this.selectedImage);
-    },
     selectNextElement(selectedImage) {
+      console.log(selectedImage);
+      console.log(this.selectedImage);
       this.images.forEach((element, index) => {
         if (element.image === selectedImage) {
           if (index + 1 === this.images.length) {
-            this.selectedImage = this.images[0].image;
+            this.changeSelectedImage(this.images[0].image);
           } else {
-            this.selectedImage = this.images[index + 1].image;
+            this.changeSelectedImage(this.images[index + 1].image);
           }
         }
       });
@@ -83,15 +75,14 @@ export default {
       this.images.forEach((element, index) => {
         if (element.image === selectedImage) {
           if (index - 1 === -1) {
-            this.selectedImage = this.images[this.images.length - 1].image;
+            this.changeSelectedImage(this.images[this.images.length - 1].image);
           } else {
-            this.selectedImage = this.images[index - 1].image;
+            this.changeSelectedImage(this.images[index - 1].image);
           }
         }
       });
     },
   },
-  mounted() {},
 };
 </script>
 <style scoped>

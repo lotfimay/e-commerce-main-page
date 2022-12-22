@@ -2,7 +2,8 @@
   <div class="product-presentation">
     <product-demonstration
       :images="product.images"
-      :image="product.image"
+      :selectedImage="this.getSelectedImage"
+      :changeSelectedImage="changeSelectedImage"
       @open-dialog="() => openDialog(selectedImage)"
     ></product-demonstration>
     <product-info
@@ -17,7 +18,8 @@
     <base-dialog @close-dialog="this.isDialogShowing = !this.isDialogShowing">
       <product-demonstration
         :images="product.images"
-        :image="product.image"
+        :selectedImage="this.dialogSelectedImage"
+        :changeSelectedImage="this.changeDialogSelectedImage"
         :style="this.dialogStyle()"
       ></product-demonstration>
     </base-dialog>
@@ -57,10 +59,16 @@ export default {
           { image: image3, thumbnail: thumbnail3 },
           { image: image4, thumbnail: thumbnail4 },
         ],
-        image: image1,
+        selectedImage: image1,
       },
       isDialogShowing: false,
+      dialogSelectedImage: null,
     };
+  },
+  computed: {
+    getSelectedImage() {
+      return this.product.selectedImage;
+    },
   },
   methods: {
     dialogStyle() {
@@ -69,7 +77,14 @@ export default {
         padding: 0,
       };
     },
+    changeSelectedImage(image) {
+      this.product.selectedImage = image;
+    },
+    changeDialogSelectedImage(image) {
+      this.dialogSelectedImage = image;
+    },
     openDialog() {
+      this.dialogSelectedImage = this.product.selectedImage;
       this.isDialogShowing = true;
     },
   },
